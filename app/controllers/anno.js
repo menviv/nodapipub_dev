@@ -855,9 +855,6 @@ router.post('/PerformDonation/', function(req, res) {
                 
                 var lowprofilecode = findGetParameter("LowProfileCode"); 
             
-               // StoreData("LowProfile",ResponseUrl);
-                
-              //  StoreData("Log",ResponseUrl); 
                 
                 UpdateDonationRecordinSFDC(lowprofilecode);    
                 
@@ -872,18 +869,35 @@ router.post('/PerformDonation/', function(req, res) {
                         });                    
                     
                         conn.login(SFDCLoginUser, SFDCLoginPass_Token, function(err, response) {
-                  		if (err) { return console.error(err); }
-                
+
+
+                            if (err) { 
+
+                                return console.error(err); 
+                                logger.error('Login to SFDC [PerformDonation] failure: ' + err);
+                            
+                            } else {
+
+                                logger.info('Login to SFDC [PerformDonation] success');
+
+                            }    
+
+
                 
                   			conn.query("SELECT Id FROM Donation_Payment__c WHERE DonationNumber__c="+ DonationNumber + "", function(err, result) {
-                    		if (err) { return console.error(err); }
+
+                                DonationID = result.records[0].Id;
                             
-                            DonationID = result.records[0].Id;
-                            
-                            var subDonationID = DonationID.substring(0, 15);
-                            
-                            
-                
+                                var subDonationID = DonationID.substring(0, 15);
+
+    		                    if (err) { 
+
+                                    return console.error(err); 
+                                    logger.error('Query SFDC [PerformDonation] failure: ' + err);
+                  
+                                }
+                        
+           
                                 if (result.totalSize > 0) {
                                
                                   // Single record update
@@ -896,6 +910,18 @@ router.post('/PerformDonation/', function(req, res) {
                                     console.log('Donation Record Updated Successfully : ' + ret.id);
                                     // ...
                                     }); 
+
+
+                                        if (err) { 
+
+                                            return console.error(err); 
+                                            logger.error('Update lowprofilecode in Donation_Payment__c ' + subDonationID + ' in SFDC [UpdateDonationRecordinSFDC] failure: ' + err);
+                                                    
+                                        } else {
+
+                                            logger.info('Update lowprofilecode in Donation_Payment__c ' + subDonationID + '/' + lowprofilecode + ' in SFDC [UpdateDonationRecordinSFDC] success');
+
+                                        }                                     
                                     
                                                         
                 
