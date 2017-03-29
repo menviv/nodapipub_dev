@@ -3,11 +3,16 @@ var express = require('express'),
   Article = require('../models/article');
 
 module.exports = function (app) {
-  app.use('/public', router);
+  app.use('/', router);
 };
 
-
-console.log("Gtech NodAPI public functions");
+router.get('/', function (req, res, next) {
+  var articles = [new Article(), new Article()];
+    res.render('index', {
+      title: 'ממשק ניהול - חברת Gtech',
+      articles: articles
+    });
+});
 
 
 router.get('/ValidateEmail/:email', function(req, res) {
@@ -29,56 +34,5 @@ router.get('/ValidateEmail/:email', function(req, res) {
                 }
                 return status;
             }
-
-});
-
-
-
-router.get('/ValidatePhone/:phone', function(req, res) {
-/*
-    var phone = req.params.phone; 
-    
-    var result = verifyPhone(phone);
-    
-    console.log("ValidatePhone: ", result);
-    
-    res.send(result);
-
-            function verifyPhone(number)  
-            {  
-                var phoneRegex = /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/;​​
-                
-                if(!number.match(phoneRegex)){
-                    
-                   return "false";
-                   
-                } else {
-                    
-                   return "true"; 
-                    
-                } 
-            }              
-*/
-});
-
-
-
-
-router.get('/ValidateID/:idnum', function(req, res) {
-
-    var idnum = req.params.idnum; 
-
-    var result = isValidIsraeliID(idnum);
-    
-    console.log("ValidateID: ", result);
-    
-    res.send(result);
-
-    function isValidIsraeliID(id) {
-      return /\d{9}/.test(id) && Array.from(id, Number).reduce((counter, digit, i) => {
-            const step = digit * ((i % 2) + 1);
-            return counter + (step > 9 ? step - 9 : step);
-        }) % 10 === 0;
-    }              
 
 });
