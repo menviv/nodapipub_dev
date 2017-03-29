@@ -488,12 +488,19 @@ router.post('/QueryAnnoSFDC/', function(req, res) {
                                     // Single donation record 
                                     conn.sobject("Donation_Payment__c").create({ Contact__c : ContactID, Project__c : Project, ReccuringDonationNo__c : "1", Amount__c : Amount, OriginalAmount__c :Amount , DonationType__c : DonationType, Operation__c : Operation, DateToBill__c : DateToCharge, OriginalDateToBill__c: DateToCharge, DonationNumber__c : DonationNumber, Original_Donation_Number__c : DonationNumber, DonationCode__c : DonationCode, Status__c : "wait", numPayments__c : numPayments, Statusicon__c : Statusicon, CreatedBy__c : AnnoEmp, donarid__c : donarid, BillDateGroup__c : BillDateGroup, attempts__c: "0"  }, function(err, ret) {
                                     if (err || !ret.success) { return console.error(err, ret); }
-                                    //console.log("Donation Created record id : " + ret.id);
+                                    
                                     res.json(ret.id);
                                     
-                                 //   StoreData("SFDC",ret.id);
-                   
-                                 //   StoreData("Log",ret.id);  
+                                    if (err) { 
+
+                                        return console.error(err); 
+                                        logger.error('Create New Donation_Payment__c in SFDC [QueryAnnoSFDC] failure: ' + err);
+                        
+                                    } else {
+
+                                        logger.info('New Donation_Payment__c: ' + ret.id + ' created in SFDC success');
+
+                                    }  
                                    
                                     });
 
@@ -509,9 +516,19 @@ router.post('/QueryAnnoSFDC/', function(req, res) {
                         if (err || !ret.success) { return console.error(err, ret); }
                         res.json(ret.id);
                         
-                       // StoreData("SFDC",ret.id);
-                   
-                     //   StoreData("Log",ret.id);                        
+
+                             if (err) { 
+
+                                        return console.error(err); 
+                                        logger.error('Create New Donation_Payment__c on existing contact in SFDC [QueryAnnoSFDC] failure: ' + err);
+                        
+                                    } else {
+
+                                        logger.info('New Donation_Payment__c: ' + ret.id + ' created on existing contact in SFDC success');
+
+                             }  
+
+
                         
                         });                    
 
@@ -549,7 +566,16 @@ conn.login(SFDCLoginUser, SFDCLoginPass_Token, function(err, response) {
 
 
   			conn.query("SELECT Id FROM Donation_Payment__c WHERE LowProfileCode__c='"+ LowProfileCode + "'", function(err, result) {
-    		if (err) { return console.error(err); }
+  		        if (err) { 
+
+                    return console.error(err); 
+                    logger.error('Login to SFDC [successQueryAnnoSFDC] failure: ' + err);
+                  
+                 } else {
+
+                     logger.info('Login to SFDC [successQueryAnnoSFDC] success');
+
+                 }
             
                 DonationID = result.records[0].Id;
                             
@@ -570,6 +596,18 @@ conn.login(SFDCLoginUser, SFDCLoginPass_Token, function(err, response) {
                     if (err || !ret.success) { return console.error(err, ret); }
                     console.log('Updated Successfully : ' + ret.id);
                     
+                    if (err) { 
+
+                        return console.error(err); 
+                        logger.error('Update Donation_Payment__c in SFDC [successQueryAnnoSFDC] failure: ' + err);
+                    
+                    } else {
+
+                        logger.info('Update Donation_Payment__c ' + ret.id + ' in SFDC [successQueryAnnoSFDC] success');
+
+                    }
+
+
                     }); 
                     
                                         
@@ -637,9 +675,7 @@ conn.login(SFDCLoginUser, SFDCLoginPass_Token, function(err, response) {
                             
                             var InternalDealNumber = findGetParameter("InternalDealNumber");
                                 
-                          //  StoreData("ResToken",Token);
-                   
-                          //  StoreData("Log",Token); 
+
                             
                             UpdateTokenInDonationRecordinSFDC();    
                             
@@ -663,14 +699,23 @@ conn.login(SFDCLoginUser, SFDCLoginPass_Token, function(err, response) {
                                         DonationID = result.records[0].Id;
                                         
                                         var subDonationID = DonationID.substring(0, 15);
+
                                         
-                                        
+                                            if (err) { 
+
+                                                return console.error(err); 
+                                                logger.error('Update Asimon in Donation_Payment__c ' + subDonationID + ' in SFDC [UpdateTokenInDonationRecordinSFDC] failure: ' + err);
+                                            
+                                            } else {
+
+                                                logger.info('Update Asimon in Donation_Payment__c ' + subDonationID + ' in SFDC [UpdateTokenInDonationRecordinSFDC] success');
+
+                                            }    
+
+
                             
                                             if (result.totalSize > 0) {
-
-                                        //    StoreData("SFDC",body);
-                   
-                                        //    StoreData("Log",body);                                            
+                                          
                             
                                                 // Single record update
                                                 conn.sobject("Donation_Payment__c").update({ 
