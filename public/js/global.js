@@ -65,6 +65,12 @@ $(document).ready(function() {
    
     $('#closeReoccuringList').on('click', closeReoccuringList); 
 
+    $('#openLog').on('click', getSystemLog);  
+   
+    $('#closeLog').on('click', closeSystemLog);     
+
+    
+
 });
 
 // Functions =============================================================
@@ -92,6 +98,17 @@ function closeReoccuringBuilder(event) {
 function closeReoccuringList(event) {
     
     $( "#Reoccuring" ).fadeOut( "slow" );  
+        
+    $( "#manage" ).fadeIn( "slow" );  
+    
+    $( "#Shading" ).fadeOut( "fast" ); 
+    
+}
+
+
+function closeSystemLog(event) {
+    
+    $( "#Log" ).fadeOut( "slow" );  
         
     $( "#manage" ).fadeIn( "slow" );  
     
@@ -298,6 +315,8 @@ function getReoccuringList() {
         $( "#Shading" ).fadeIn( "fast" ); 
         
         $( "#manage" ).fadeOut( "slow" );  
+
+        $( "#Log" ).fadeOut( "slow" );  
         
         $( "#Reoccuring" ).fadeIn( "slow" );  
         
@@ -310,3 +329,51 @@ function getReoccuringList() {
 
 };
 
+
+
+
+// Fill table with Log data
+function getSystemLog() {
+  
+    // Empty content string
+    var tableContent = '';
+    var url = '/anno/GetLogList/';
+
+    
+    // jQuery AJAX call for JSON
+    $.getJSON( url, function( data ) {
+        
+        // For each item in our JSON, add a table row and cells to the content string
+        $.each(data, function(){
+        
+            // Stick our user data array into a userlist variable in the global object
+    		ListData = data;
+            
+        
+            tableContent += '<tr>';
+            tableContent += '<td>' + this.timestamp + '</td>';
+            tableContent += '<td>' + this.data + '</td>';
+            tableContent += '<td>' + this.category + '</td>';
+            tableContent += '<td>' + this.level + '</td>';
+            tableContent += '</tr>';            
+
+        });
+       
+        $('#LogList').html(tableContent);
+        
+        $( "#Shading" ).fadeIn( "fast" ); 
+        
+        $( "#manage" ).fadeOut( "slow" );  
+
+        $( "#Reoccuring" ).fadeOut( "slow" ); 
+        
+        $( "#Log" ).fadeIn( "slow" );  
+        
+
+        
+        
+
+    }); 
+    
+
+};

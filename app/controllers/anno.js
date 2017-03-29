@@ -40,7 +40,7 @@ mongo.MongoClient.connect(connString, function(err, database) {
   colResToken = dbm.collection('ResToken');
   colSettings = dbm.collection('Settings');
   colUsers = dbm.collection('Users');
-  colLog =  dbm.collection('Log');
+  colLog =  dbm.collection('log');
   colSFDC = dbm.collection('SFDC');
 });
 
@@ -96,72 +96,6 @@ console.log("Gtech NodAPI Anonimouse functions");
     var InvoiceLines_Description;
     
     
-    
-// Global MongoDB function
-
-function StoreData(col,data) {
-    
-    
-    if (col=="ReqDonation") {
-
-    	colReqDonation.insert(data, function(err, resultReqDonation){
-    	
-            return resultReqDonation;
-    	
-    	});        
-        
-    } else if (col=="ResLowProfile") {
-
-    	colResLowProfile.insert(data, function(err, resultResLowProfile){
-    	
-            return resultResLowProfile;
-    	
-    	});         
-        
-    } else if (col=="ResToken") {
-        
-    	colResToken.insert(data, function(err, resultResToken){
-    	
-            return resultResToken;
-    	
-    	}); 
-        
-    } else if (col=="Settings") {
-        
-    	colSettings.insert(data, function(err, resultSettings){
-    	
-            return resultSettings;
-    	
-    	}); 
-        
-    } else if (col=="Users") {
-
-    	colUsers.insert(data, function(err, resultUsers){
-    	
-            return resultUsers;
-    	
-    	});         
-        
-    } else if (col=="SFDC") {
-
-    	colSFDC.insert(data, function(err, resultSFDC){
-    	
-            return resultSFDC;
-    	
-    	});         
-        
-    } else {
-
-    	colLog.insert(data, function(err, resultLog){
-    	
-            return resultLog;
-    	
-    	});         
-        
-    }
-    
-};    
-
 
 
 
@@ -297,6 +231,47 @@ router.get('/getSettings/', function(req, res) {
     
     
 });
+
+
+
+
+
+
+
+/*
+ * GET Log List 
+ */
+router.get('/GetLogList', function(req, res) {
+    
+          var cursor = colLog.find({});
+          var result = [];
+          cursor.each(function(err, doc) {
+              if(err)
+                  throw err;
+              if (doc === null) {
+                  // doc is null when the last document has been processed
+                  
+                result.sort(function(a, b){
+                var TimeA=new Date(a.timestamp), TimeB=new Date(b.timestamp)
+                //return dateB-dateA //sort by date ascending
+                return TimeB-TimeA //sort by date decending
+                })
+
+                res.send(result);
+
+                  return;
+              }
+              // do something with each doc, like push Email into a results array
+              result.push(doc);
+          }); 
+    
+});
+
+
+
+
+
+
 
 
 
