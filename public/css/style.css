@@ -38,7 +38,7 @@ div#manage {
     left: 20%;
     padding: 5%;
     padding-top: 0;
-    margin-top: 5%;
+    margin-top: 1%;
     border: 1px solid #00d0ff;
     background-color: rgba(0, 208, 255, 0.37);
     border-radius: 5px;
@@ -268,4 +268,14 @@ div#ReoccuringListHeader {
     text-align: center;
     padding: 5px;
     margin-bottom: 30px;
+}
+
+h1 {
+    direction: rtl;
+    text-align: center;
+    margin-top: initial;
+    position: fixed;
+    top: 1%;
+    width: 100%;
+    left: 0;
 }

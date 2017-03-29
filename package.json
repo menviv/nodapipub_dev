@@ -1,6 +1,6 @@
 {
   "name": "node",
-  "version": "0.0.1",
+  "version": "0.10.28",
   "private": true,
   "main": "app.js",
   "scripts": {
@@ -18,6 +18,8 @@
     "glob": "^6.0.4",
     "jade": "^1.11.0",
     "jsforce": "^1.7.1",
+    "kue": "^0.11.5",
+    "log4js-node-mongodb": "^2.2.1",
     "method-override": "^2.3.0",
     "moment": "^2.18.1",
     "mongo": "^0.1.0",

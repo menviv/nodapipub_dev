@@ -6,16 +6,18 @@ var jsforce = require('jsforce');
 var request = require('request');
 var xml2js = require('xml2js');
 
+
+///////// Time Module ///////////////////////
 var moment = require('moment');
-var mongo = require('mongodb');
 var DateFormat = "DD-MM-YYYY HH:mm:ss";
 var invDateFormat = "DD-MM-YYYY";
 var LogTimeStame = moment().format(DateFormat); 
 var invTimeStame = moment().format(invDateFormat); 
 
 
-
-var connString = 'mongodb://nodapi:nodapi@ds139470.mlab.com:39470/nodapi';
+///////// DB Module ///////////////////////
+var mongo = require('mongodb');
+var connString = 'mongodb://nodapi:nodapi@ds145370.mlab.com:45370/nodapidev';
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var dbm;
@@ -43,6 +45,21 @@ mongo.MongoClient.connect(connString, function(err, database) {
 });
 
 
+
+///////// Logging Module ///////////////////////
+var log4js = require('log4js');
+var mongoAppender = require('log4js-node-mongodb');
+
+log4js.addAppender(
+    mongoAppender.appender({connectionString: connString}),
+    'anno'
+);
+
+var logger = log4js.getLogger('anno');
+
+
+
+
 module.exports = function (app) {
   app.use('/anno', router);
 };
@@ -50,7 +67,7 @@ module.exports = function (app) {
 
 
 
-console.log("Gtech NodAPI anonimouse functions");
+console.log("Gtech NodAPI Anonimouse functions");
 
 // Global Settings Variables
 
@@ -169,7 +186,6 @@ router.post('/changeSettings/', function(req, res) {
      SFDCEnvironmentURL = doc.SFDCEnvironmentURL;
      Attempts = doc.Attempts; 
  
-    console.log(ObjID);
     var o_id = new mongo.ObjectID(ObjID);
   
    colSettings.update(
@@ -180,16 +196,9 @@ router.post('/changeSettings/', function(req, res) {
        {
            
        res.json(results);
+
+       logger.info('Change Settings Success');
        
-   //    var o_ID = new mongo.ObjectID(); 
-                
-    //   results[0]._id = o_ID; 
-                
-   //    results[0].time = LogTimeStame;        
-       
-  //     StoreData("Settings",results);
-       
-  //     StoreData("Log",results);
        
        });
 
@@ -222,31 +231,16 @@ router.get('/Login/:userID/:Password', function(req, res) {
                 
                 res.send(result);
                 
-                var o_ID = new mongo.ObjectID(); 
-                
-                result[0]._id = o_ID; 
-                
-                result[0].time = LogTimeStame;                
-                
-               StoreData("Users",result);
-               
-               StoreData("Log",result);                
+                logger.info('Login Success: ' + userID);
+                             
                 
             } else {
                 
                 result.login = "false";
                 
                 res.send(result);
-                
-              //  var o_ID = new mongo.ObjectID(); 
-                
-           //     result[0].time = LogTimeStame;   
-                
-            //    result[0]._id = o_ID;                 
-                
-            //    StoreData("Users",result);
-               
-            //    StoreData("Log",result);                
+
+                logger.info('Login failure: ' + userID);             
                 
             }            
             
@@ -268,8 +262,13 @@ router.get('/getSettings/', function(req, res) {
     var cursor = colSettings.find({});
     var result = [];
     cursor.each(function(err, doc) {
-        if(err)
+        if(err) {
+
             throw err;
+            logger.error('Get Settings failure: ' + err);
+
+        }
+
         if (doc === null) {
             // doc is null when the last document has been processed
             res.send(result);
@@ -286,17 +285,8 @@ router.get('/getSettings/', function(req, res) {
              SFDCLoginPass_Token = result[0].SFDCLoginPass_Token;
              SFDCEnvironmentURL = result[0].SFDCEnvironmentURL; 
              Attempts  = result[0].Attempts ; 
-                
-             
-         //       var o_ID = new mongo.ObjectID(); 
-                
-          //      result[0]._id = o_ID;
-                
-          //      result[0].time = LogTimeStame;                       
 
-         //       StoreData("Settings",result);
-               
-         //       StoreData("Log",result);
+             logger.info('Load Settings success');
     
             
             return;
@@ -325,13 +315,20 @@ router.get('/getReoccuringList/:day', function(req, res) {
                         });                    
                     
                         conn.login(SFDCLoginUser, SFDCLoginPass_Token, function(err, response) {
-                  		if (err) { return console.error(err); }
+                  		if (err) { 
+                                    return console.error(err); 
+                                    logger.error('Login to SFDC [getReoccuringList] failure: ' + err);
+                                 }
+
+                            logger.info('Login to SFDC [getReoccuringList] success');
                 
                 
                   			conn.query("SELECT Id, Amount__c, BillDateGroup__c, attempts__c, donarid__c, Status__c  FROM Donation_Payment__c WHERE BillDateGroup__c='"+ day + "' AND (Status__c='Active' OR Status__c='wait')", function(err, result) {
                     		if (err) { return console.error(err); }
 
                             res.json(result);
+
+                            logger.info('Get ReoccuringList from SFDC success');
                             
                 
                   			});
@@ -446,29 +443,46 @@ router.post('/QueryAnnoSFDC/', function(req, res) {
        loginUrl : SFDCEnvironmentURL
     });
 		conn.login(SFDCLoginUser, SFDCLoginPass_Token, function(err, response) {
-  		if (err) { return console.error(err); }
+  		if (err) { 
+
+                    return console.error(err); 
+                    logger.error('Login to SFDC [QueryAnnoSFDC] failure: ' + err);
+                  
+                 }
 
   			conn.query("SELECT Id, Email FROM Contact WHERE Email='"+ Email + "'", function(err, result) {
-    		if (err) { return console.error(err); }
+    		if (err) { 
+
+                        return console.error(err); 
+                        logger.error('Query SFDC [QueryAnnoSFDC] failure: ' + err);
+                  
+                     }
 
                 
     			
 
                 if (result.totalSize==0) {
-                    
-            //     StoreData("SFDC",result);
-                   
-            //     StoreData("Log",result);                     
+                                        
 
                             // Single contact record creation
                             conn.sobject("Contact").create({ FirstName : FirstName, LastName : LastName, Email : Email, Field1__c : donarid, AddressCust__c: Address}, function(err, ret) {
                             if (err || !ret.success) { return console.error(err, ret); }
                             ContactID = ret.id;
                             console.log("ContactID record id : " + ContactID);
+
+                            if (err) { 
+
+                                return console.error(err); 
+                                logger.error('Create New Contact in SFDC [QueryAnnoSFDC] failure: ' + err);
+                  
+                            } else {
+
+                                logger.info('New ContactID: ' + ContactID + ' created in SFDC success');
+
+                            }                           
+
                             
-                        //    StoreData("SFDC",ret.id);
-                   
-                        //    StoreData("Log",ret.id); 
+                            
 
 
                                     // Single donation record 
@@ -616,6 +630,12 @@ conn.login(SFDCLoginUser, SFDCLoginPass_Token, function(err, response) {
                             var TokenApprovalNumber = findGetParameter("TokenApprovalNumber");
                             
                             var lowprofilecode = findGetParameter("LowProfileCode"); 
+                            
+                            var CardNumber = findGetParameter("ExtShvaParams.CardNumber5");
+                            
+                            var CreditType = findGetParameter("ExtShvaParams.CreditType63");
+                            
+                            var InternalDealNumber = findGetParameter("InternalDealNumber");
                                 
                           //  StoreData("ResToken",Token);
                    
@@ -663,7 +683,10 @@ conn.login(SFDCLoginUser, SFDCLoginPass_Token, function(err, response) {
                                                 CardOwnerID__c : CardOwnerID,
                                                 CardValidityYear__c : CardValidityYear,
                                                 CardValidityMonth__c : CardValidityMonth,
-                                                TokenApprovalNumber__c : TokenApprovalNumber
+                                                TokenApprovalNumber__c : TokenApprovalNumber,
+                                                CardNumber__c : CardNumber,
+                                                CreditType__c : CreditType,
+                                                InternalDealNumber__c : InternalDealNumber
                                                 }, function(err, ret) {
                                                 if (err || !ret.success) { return console.error(err, ret); }
                                                 console.log('Donation Token Record Updated Successfully : ' + ret.id);
