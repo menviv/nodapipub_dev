@@ -1,0 +1,271 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+input {
+    border-radius: 2px;
+    width: 90%;
+    margin-bottom: 10px;
+    height: 20px;
+    border: 1px solid orange;
+    padding-left: 5px;
+}
+
+input#inputID {
+    border-radius: 2px;
+    width: 70%;
+    margin-bottom: 10px;
+    height: 20px;
+    border: 1px solid orange;
+    padding-left: 5px;
+    opacity:0;
+}
+
+fieldset {
+    width: 100%;
+    border: 0px;
+}
+
+div#manage {
+    position: fixed;
+    width: 50%;
+    top: 10%;
+    left: 20%;
+    padding: 5%;
+    padding-top: 0;
+    margin-top: 5%;
+    border: 1px solid #00d0ff;
+    background-color: rgba(0, 208, 255, 0.37);
+    border-radius: 5px;
+    display: none;
+}
+
+button {
+    border: 1px solid #00b7ff;
+    background: #00b7ff;
+    color: #fff;
+    width: 150px;
+    font-size: 15px;
+    font-weight: 400;
+    position: absolute;
+    margin: auto;
+    cursor: pointer;
+}
+
+h1 {
+    direction: rtl;
+    text-align: center;
+}
+
+p {
+    direction: rtl;
+    text-align: center;
+}
+
+div#status {
+    position: fixed;
+    bottom: 10px;
+    color: green;
+}
+
+div#login {
+    position: fixed;
+    width: 20%;
+    height: 200px;
+    left: 40%;
+    top: 20%;
+    background-color: #00d0ff;
+    border-radius: 10px;
+    padding: 3%;
+}
+
+input#userID {
+    width: 80%;
+    margin-left: 10%;
+}
+
+input#password {
+    width: 80%;
+    margin-left: 10%;
+}
+
+div#loginmsg {
+    position: absolute;
+    bottom: 5px;
+    color: #fff;
+    display: none;
+}
+
+div#Shading {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.72);
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: none;
+}
+
+div#ReoccuringBuilder {
+    position: fixed;
+    top: 10%;
+    left: 30%;
+    width: 40%;
+    height: 250px;
+    z-index: 1100;
+    background: #f3a914;
+    border-radius: 5px;
+    display: none;
+}
+
+div#Menu {
+    position: fixed;
+    left: 3%;
+    top: 10%;
+    background: #a9a8a8;
+    padding: 1%;
+    width: 14%;
+    display: none;
+}
+
+div#openReoccuringBuilder {
+    float: left;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #fff;
+    width: 100%;
+    font-size: 22px;
+}
+
+div#openReoccuringBuilder:hover {
+    float: left;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: orange;
+    width: 100%;
+    font-size: 22px;
+}
+
+div#openReoccuringList {
+    float: left;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #fff;
+    width: 100%;
+    font-size: 22px;
+}
+
+div#openReoccuringList:hover {
+    float: left;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: orange;
+    width: 100%;
+    font-size: 22px;
+}
+
+div#closeReoccuringBuilder {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+}
+
+div#closeReoccuringBuilder {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 22px;
+}
+
+p#selectHeaderDP {
+    float: left;
+    width: 100%;
+    height: 22px;
+    direction: ltr;
+    margin-top: 30px;
+    background: #fff;
+}
+
+p#selectHeaderTR {
+    float: left;
+    width: 100%;
+    height: 22px;
+    direction: ltr;
+    margin-top: 30px;
+    background: #fff;
+}
+
+select#DaysPackage {
+    float: left;
+    width: 50%;
+    margin-left: 25%;
+    height: 25px;
+}
+
+select#TimeToRun {
+    float: left;
+    width: 50%;
+    margin-left: 25%;
+    height: 25px;
+}
+
+button#btnSaveProcess {
+    position: absolute;
+    width: 30%;
+    bottom: 5px;
+    left: 35%;
+}
+
+div#Reoccuring {
+    position: fixed;
+    width: 70%;
+    top: 10%;
+    left: 15%;
+    padding: 1%;
+    padding-top: 0;
+    margin-top: 3%;
+    border: 1px solid #00d0ff;
+    background-color: rgba(0, 208, 255, 0.37);
+    border-radius: 5px;
+    z-index: 1100;
+    display: none;
+}
+
+table#ReoccuringList {
+    width: 100%;
+    color: rgba(228, 228, 228, 0.72);
+    font-size: 16px;
+}
+
+div#closeReoccuringList {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 22px;
+}
+
+div#ReoccuringListHeader {
+    float: left;
+    width: 100%;
+    direction: ltr;
+    margin-top: 50px;
+    background: #fff;
+    font-size: 22px;
+    height: 25px;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 30px;
+}

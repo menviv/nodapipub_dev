@@ -1,0 +1,609 @@
+
+    <title>אנונימוס - הגדרות</title>
+    
+  <meta charset="UTF-8">  
+
+	<meta property="og:type"               content="article" />
+	<meta property="og:title"              content="אנונימוס" />
+	<meta property="og:description"        content="ממשק הגדרות מערכת" />
+	<meta property="og:image"              content="/logos/FacebookShareLogo.jpg" />    
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="/logos/favicon.ico" type="image/x-icon">
+
+
+    
+    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    
+    <link rel="import" href="../polymer/polymer.html">
+
+       
+    <link href='https://fonts.googleapis.com/css?family=Alef' rel='stylesheet' type='text/css'>
+    
+       
+    <link href='http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/css/uikit.min.css" /> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/css/components/autocomplete.min.css" />
+ 		
+
+    <link rel="import" href="../../paper-styles/demo-pages.html">
+    
+    <link rel="import" href="../Settings.html">
+	
+	<link rel="import" href="../Menu.html">
+    
+    
+
+
+	<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+	<link rel="import" href="../iron-ajax/iron-ajax.html">    
+    <link rel="import" href="../paper-styles/demo-pages.html">
+    <link rel="import" href="../paper-button/paper-button.html">
+    <link rel="import" href="../paper-card/paper-card.html">
+    <link rel="import" href="../paper-slider/paper-slider.html">
+    <link rel="import" href="../paper-ripple/paper-ripple.html">
+    <link rel="import" href="../paper-drawer-panel/paper-drawer-panel.html">
+
+
+    
+    <link rel="import" href="../paper-input/paper-input-container.html">
+    <link rel="import" href="../paper-input/paper-input-error.html">
+    <link rel="import" href="../paper-input/paper-input.html">
+    
+	<link rel="import" href="../iron-icons/iron-icons.html">
+	<link rel="import" href="../iron-icons/hardware-icons.html">
+	<link rel="import" href="../iron-icons/social-icons.html">
+	<link rel="import" href="../iron-icons/maps-icons.html">
+	<link rel="import" href="../iron-icons/image-icons.html">	
+	<link rel="import" href="../iron-icons/editor-icons.html">
+	<link rel="import" href="../iron-input/iron-input.html">
+	<link rel="import" href="../iron-image/iron-image.html">
+	<link rel="import" href="../paper-toast/paper-toast.html">
+	<link rel="import" href="../iron-overlay-behavior/iron-overlay-behavior.html">
+    
+    
+    <link rel="import" href="../neon-animation/neon-animated-pages.html">
+    <link rel="import" href="../neon-animation/neon-animatable.html">
+    <link rel="import" href="../neon-animation/neon-animations.html">
+    <link rel="import" href="../neon-animation/neon-shared-element-animatable-behavior.html">   
+    
+    <link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
+	<link rel="import" href="../neon-animation/animations/scale-up-animation.html">
+	<link rel="import" href="../neon-animation/animations/fade-out-animation.html"> 
+    
+    <link rel="import" href="../iron-media-query/iron-media-query.html">
+        
+    
+  	<link rel="import" href="../paper-menu/paper-menu.html">
+    <link rel="import" href="../paper-progress/paper-progress.html">
+  	<link rel="import" href="../paper-toggle-button/paper-toggle-button.html">
+  	<link rel="import" href="../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../paper-spinner/paper-spinner-lite.html">
+    <link rel="import" href="../paper-spinner/paper-spinner.html">
+  	
+  	
+  	<link rel="import" href="../neon-animation/demo/shared-styles.html">
+  	<link rel="import" href="../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../paper-styles/typography.html">
+    <link rel="import" href="../paper-styles/color.html">  	   
+
+
+  	<link rel="import" href="../iron-label/iron-label.html">
+
+   <link rel="import" href="../paper-toolbar/paper-toolbar.html">
+   <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+   <link rel="import" href="../paper-dialog/paper-dialog.html">
+   <link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
+   <link rel="import" href="../iron-icons/communication-icons.html">
+   <link rel="import" href="../neon-animation/neon-animation-behavior.html">
+   <link rel="import" href="../iron-meta/iron-meta.html"> 
+   <link rel="import" href="../iron-media-query/iron-media-query.html"> 
+   <link rel="import" href="../iron-collapse/iron-collapse.html">
+
+
+   <link rel="import" href="../app-layout/app-header/app-header.html">
+   <link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
+   <link rel="import" href="../app-layout/app-scroll-effects/app-scroll-effects.html">
+   <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+   <link rel="import" href="../iron-list/iron-list.html">
+   <link rel="import" href="../iron-form/iron-form.html">
+
+
+
+
+    
+
+    <style is="custom-style">
+
+
+    @media only screen and (max-width: 760px) {
+      .introjs-tooltip { display: none; }
+
+      .introjs-overlay { display: none; }
+
+      .introjs-helperNumberLayer { display: none; }
+
+    }
+
+      .introjs-tooltip {
+          direction: rtl;
+          font-size: 18px;
+          font-family: alef;
+          width: 300px;
+          padding: 1vw;
+      }
+
+
+
+
+
+    body{
+      font-family: 'Alef', sans-serif;
+    }
+
+
+
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+
+body.loading {
+    overflow: hidden;   
+}
+
+body.loading .modal {
+    display: block;
+}    
+    
+      body {
+        direction: rtl;
+   		} 
+    
+	neon-animated-pages {
+    	position: absolute;
+    	top: 70px;
+    	left: 0;
+    	bottom: 0;
+    	right: 0;
+    	overflow-y: scroll;
+	} 
+
+	neon-animated-pages > * {
+    	float: right;
+	}
+    
+      #paperDrawerPanel [main] {
+        background-color: var(--google-grey-100);
+      }
+      #paperDrawerPanel [drawer] {
+        border-right: 1px solid var(--google-grey-300);
+      }
+      #paperDrawerPanel[right-drawer] [drawer] {
+        border-left: 1px solid var(--google-grey-300);
+      }
+      paper-button {
+        color: white;
+        margin: 10px;
+        background-color: var(--google-blue-700);
+        white-space: nowrap;
+      }
+      button {
+        display: block;
+        line-height: 40px;
+        background-color: transparent;
+        border: none;
+        font-size: 14px;
+        margin: 20px;
+      }
+      
+
+          paper-toolbar.purple {
+            --paper-toolbar-background: #E91E63;
+            --paper-toolbar-title: {
+              font-weight: bold;
+              float: right;
+            };
+            --paper-toolbar-logo: {
+              float: left;
+            };            
+          }
+
+
+
+      app-toolbar paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      } 
+      
+	.ActivitiesPanel {
+    	width: 100%;
+    	max-height: 40%;
+    	float: right;
+    	text-align: right;
+	} 
+	
+	
+	.RequestActivityPanelContainer {
+	
+		max-height:40%;
+		width: 50%;
+		float: right;
+		padding-right: 5%;
+		color: initial;
+		line-height: initial;
+    	letter-spacing: initial; 	
+	
+	}     
+            
+	.PanelListClass {
+
+		max-height:90%;
+		width: 90%;
+		float: right;
+		padding-top: 1%;
+		margin-top: 35px;
+		color: initial;
+		line-height: initial;
+    	letter-spacing: initial; 
+	}
+
+
+  	.PanelListClass_ActivityList {
+
+		max-height:90%;
+		width: 100%;
+		float: right;
+		padding-top: 1%;
+    padding-right:1%;
+    overflow: hidden;
+		margin-top: 35px;
+		color: initial;
+		line-height: initial;
+    letter-spacing: initial; 
+	}
+	
+	.PanelCreateEntity {
+
+    	max-height: 90%;
+    	width: 80%;
+    	float: right;
+    	padding-top: 1%;
+    	margin-top: 35px;
+    	color: initial;
+    	line-height: initial;
+    	letter-spacing: initial;
+
+	}	
+	
+	.PanelDialogClass {
+
+		max-height:90%;
+    min-height: 650px;
+		width: 95%;
+		float: right;
+		padding-top: 1%;
+    padding-right: 1%;
+		margin-top: 5px;
+		margin-right: 5px;
+		color: initial;
+		line-height: initial;
+    	letter-spacing: initial; 
+
+
+	}
+
+  .GenericLayout {
+
+    height: auto;
+    width: 95%;
+    float: right;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-right: 1%;
+    margin-top: 5px;
+    margin-right: 5px;
+    color: initial;
+    line-height: initial;
+    letter-spacing: initial;
+
+  }
+
+    .ReportingLayout {
+
+    height: auto;
+    width: 100%;
+    float: right;
+    padding-top: 0;
+    padding-bottom: 1%;
+    padding-right: 0;
+    margin-top: 0;
+    margin-right: 0;
+    background-color: #fff;
+    color: initial;
+    line-height: initial;
+    letter-spacing: initial;
+
+  }
+
+      
+
+
+	.ChatClass {
+
+		height:100%;
+		width: 100%;
+		float: right;
+		padding-top: 1%;
+		color: initial;
+		line-height: initial;
+    	letter-spacing: initial; 
+    	background-image: url("/covers/chat.jpg");
+
+	}
+	
+  .UserPanel {
+    width: 95%;
+    height: 100%;
+    float: right;
+    overflow: scroll;
+    padding-top: 1%;
+    color: initial;
+    line-height: initial;
+    letter-spacing: initial;	
+  }
+  
+.FirstTimePanel {
+    width: 100%;
+    height: 100%;
+    float: right;
+    overflow: scroll;
+    padding-top: 0;
+    color: initial;
+    line-height: initial;
+    letter-spacing: initial;
+    background-color: #fff;
+}  
+  
+  
+  .UserProfileClass {
+  		width: 50%;
+  		float: left;
+    	color: initial;
+    	line-height: initial;
+    	letter-spacing: initial;	  
+  }
+  
+
+  .SearchClass {
+  		width: 20%;
+  		min-width: 500px;
+  		float: left;
+  		height:40px;
+    	color: initial;
+    	line-height: initial;
+    	letter-spacing: initial;	  
+  } 
+  
+
+  .SearchClass[wide-layout] {
+	
+	display:none;	  
+  }     
+  
+  
+  .CompanyLogo[wide-layout] {
+    width: 40%;
+    height: 50px;
+    float: right;
+    background-image: url("/logos/logo.png");
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: right;
+  } 
+  
+  .CompanyLogo {
+    width: 20%;
+    height: 50px;
+    float: right;
+    background-image: url("/logos/logo.png");
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: right;
+}
+   		
+	
+      paper-toggle-button {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+
+            paper-toggle-button.green {
+              --paper-toggle-button-checked-bar-color:  var(--paper-green-500);
+              --paper-toggle-button-checked-button-color:  var(--paper-green-500);
+              --paper-toggle-button-checked-ink-color: var(--paper-green-500);
+              --paper-toggle-button-unchecked-bar-color:  var(--paper-teal-500);
+              --paper-toggle-button-unchecked-button-color:  var(--paper-teal-500);
+              --paper-toggle-button-unchecked-ink-color: var(--paper-teal-500);
+            }
+
+
+          paper-fab.orange {
+            --paper-fab-background: var(--paper-orange-500);
+            --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+          }
+
+
+.BackBtn {
+    position: fixed;
+    top: 70px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 0, 0, 0);
+    z-index: 3000;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+     	      
+    </style>
+    
+     
+    	
+    	
+  </head>
+
+  <body >
+
+ 
+ 
+    <paper-drawer-panel id="paperDrawerPanel" right-drawer >
+    
+	  
+    
+    
+    
+      <div drawer>
+        <x-Menu></x-Menu>
+      </div>
+      
+      
+      
+      <div main>
+      
+      
+   <template is="dom-bind">
+  
+    
+    <paper-toolbar class="purple">
+  		<paper-icon-button paper-drawer-toggle icon="more-vert" alt="More options"></paper-icon-button>
+  		
+  		
+  		<!--<x-Search class="SearchClass" wide-layout$="{{indexPage}}"></x-Search>-->
+  		<!--<x-UserProfile class="UserProfileClass"></x-UserProfile>-->
+	</paper-toolbar>
+    
+
+
+      <neon-animated-pages id="pages" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
+
+        			
+        <neon-animatable entry-animation="slide-from-right-animation" exit-animation="slide-left-animation">
+        
+                	<div class="LoginPanelContainer">
+        				<x-Settings></x-Settings>
+        			</div> 
+        
+        </neon-animatable>         			
+        			       
+      </neon-animated-pages>
+
+    </template>
+      
+      
+    <script>
+      var scope = document.querySelector('template[is="dom-bind"]');
+      scope.selected = 0;
+      scope._onPrevClick = function() {
+        this.entryAnimation = 'slide-from-left-animation';
+        this.exitAnimation = 'slide-right-animation';
+        this.selected = this.selected === 0 ? 5 : (this.selected - 1);
+      }
+      scope._onNextClick = function() {
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-left-animation';
+        this.selected = this.selected === 5 ? 0 : (this.selected + 1);
+      }
+      scope._onUpClick = function() {
+        this.entryAnimation = 'slide-from-top-animation';
+        this.exitAnimation = 'slide-down-animation';
+        this.selected = this.selected === 5 ? 0 : (this.selected + 1);
+      }
+      scope._onDownClick = function() {
+        this.entryAnimation = 'slide-from-bottom-animation';
+        this.exitAnimation = 'slide-up-animation';
+        this.selected = this.selected === 0 ? 5 : (this.selected - 1);
+      }
+           
+      
+      
+    </script>      
+      
+      
+      
+     </div> 
+      
+    </paper-drawer-panel>
+
+    <script>
+      (function(global) {
+        'use strict';
+        var DRAWER_ATTR = 'right-drawer';
+        var pdp = document.getElementById('paperDrawerPanel');
+
+
+        global.closeDrawer = function() { 
+
+          pdp.closeDrawer();
+          pdp.forceNarrow = true;
+
+        }
+
+        global.openDrawer = function() { 
+
+          pdp.openDrawer();
+          pdp.forceNarrow = false;
+
+        }        
+
+
+
+
+        global.flipDrawer = function() {
+          if (pdp.hasAttribute(DRAWER_ATTR)) {
+            pdp.removeAttribute(DRAWER_ATTR);
+          } else {
+            pdp.setAttribute(DRAWER_ATTR, '');
+          }
+        }
+      }(this));
+
+
+      function CloseNotificationBar() {
+
+            document.querySelector('x-UserProfile').CloseNotificationBar();
+
+      }
+  
+
+      
+
+
+    </script>
+    
+  
+    
+    
+ <div class="modal"><!-- Place at bottom of page --></div>   
+
+  </body>
+</html>

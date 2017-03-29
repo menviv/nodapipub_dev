@@ -1,0 +1,69 @@
+extends layout
+
+block content
+  h1= title
+  p פרמטרי אינטגרציה - סיילספורס וקארדקום עבור אנונימוס
+  div#login
+    input#userID(type='text', placeholder='username')
+    br
+    input#password(type='text', placeholder='password')
+    br
+    button#btnLogin Login
+    br
+    div#loginmsg Please check your credentials and try again..
+    p
+  div#Menu
+    div#openReoccuringBuilder Reoccuring Process
+    div#openReoccuringList Upcoming Donations
+  div#Reoccuring
+    div#closeReoccuringList X 
+    div#ReoccuringListHeader Upcoming Donations 
+    table#ReoccuringList
+  div#Shading
+  div#ReoccuringBuilder
+    div#closeReoccuringBuilder X
+    form(action="/csvuploader", method="post", enctype="multipart/form-data")
+       p#selectHeaderTR Reoccuring billing Time:
+       select#TimeToRun
+         option(value="tOne") 06:00AM
+         option(value="tTwo") 08:00PM
+         option(value="tThreen") 00:00AM 
+       br
+       button#btnSaveProcess Save
+       br
+       div#ProcessMsg   
+  div#manage
+    fieldset
+        input#inputID(type='text', placeholder='id')
+        div Terminal:
+        input#inputTerminal(type='text', placeholder='Terminal')
+        div UserName:
+        input#inputUserName(type='text', placeholder='UserName')
+        br
+        div Operation:
+        input#inputOperation(type='text', placeholder='Operation')
+        div DocTypeToCreate:
+        input#inputDocTypeToCreate(type='text', placeholder='DocTypeToCreate')
+        div ShowCardOwnerPhone:
+        input#inputShowCardOwnerPhone(type='text', placeholder='ShowCardOwnerPhone')
+        div ShowCardOwnerEmail:
+        input#inputShowCardOwnerEmail(type='text', placeholder='ShowCardOwnerEmail')
+        div Billing Attempts:
+        input#inputAttempts(type='text', placeholder='Number of retries')        
+        br
+        div Request LowProFileCod URL:
+        input#inputLowProFileURL(type='text', placeholder='LowProFileURL')
+        div Request Asimon URL:
+        input#inputAsimonURL(type='text', placeholder='AsimonURL')
+        br
+        div SFDC Login User:
+        input#inputSFDCLoginUser(type='text', placeholder='SFDCLoginUser')
+        div SFDC Login Pass&Token:
+        input#inputSFDCLoginPass_Token(type='text', placeholder='SFDCLoginPass_Token')
+        div SFDC Environment URL:
+        input#inputSFDCEnvironmentURL(type='text', placeholder='SFDCEnvironmentURL')
+        br
+        button#btnSaveSettings Save
+        br
+        div#status current configuration...
+
