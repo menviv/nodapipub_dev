@@ -49,9 +49,12 @@ $(document).ready(function() {
     Login();
     
     LoadCurrentSettings(); 
+
+    LoadCardComSettingsSettings(); 
     
     // Save Settings on button click
     $('#btnSaveSettings').on('click', SaveSettings); 
+    $('#btnSaveCustomConfiguration').on('click', SaveCardComSettings); 
 
     // Perfom Login on button click
     $('#btnLogin').on('click', Login); 
@@ -67,7 +70,13 @@ $(document).ready(function() {
 
     $('#openLog').on('click', getSystemLog);  
    
-    $('#closeLog').on('click', closeSystemLog);     
+    $('#closeLog').on('click', closeSystemLog);   
+
+    $('div#Custom').on('click', openCustomConfigCardCom);  
+
+    $('div#General').on('click', openGeneralConfig); 
+
+     
 
     
 
@@ -75,13 +84,32 @@ $(document).ready(function() {
 
 // Functions =============================================================
 
-// Open Reoccuring Builder
+
+function openCustomConfigCardCom() {
+
+    $( "fieldset#customConfigCardCom" ).fadeIn( "slow" ); 
+
+    $('fieldset#standard').fadeOut( "slow" ); 
+
+    console.log("openCustomConfigCardCom");
+
+}
+
+function openGeneralConfig() {
+
+    $('fieldset#standard').fadeIn( "slow" ); 
+
+    $( "fieldset#customConfigCardCom" ).fadeOut( "slow" ); 
+
+}
 
 function openReoccuringBuilder(event) {
     
     $( "#Shading" ).fadeIn( "fast" );
     
-    $( "#ReoccuringBuilder" ).fadeIn( "slow" );     
+    $( "#ReoccuringBuilder" ).fadeIn( "slow" );  
+
+    $('#btnSaveSettings').fadeOut( "slow" ); 
     
 }
 
@@ -91,6 +119,8 @@ function closeReoccuringBuilder(event) {
     $( "#ReoccuringBuilder" ).fadeOut( "slow" );   
     
     $( "#Shading" ).fadeOut( "fast" );  
+
+    $('#btnSaveSettings').fadeIn( "slow" ); 
     
 }
 
@@ -100,6 +130,8 @@ function closeReoccuringList(event) {
     $( "#Reoccuring" ).fadeOut( "slow" );  
         
     $( "#manage" ).fadeIn( "slow" );  
+
+    $('#btnSaveSettings').fadeIn( "slow" );  
     
     $( "#Shading" ).fadeOut( "fast" ); 
     
@@ -111,6 +143,8 @@ function closeSystemLog(event) {
     $( "#Log" ).fadeOut( "slow" );  
         
     $( "#manage" ).fadeIn( "slow" );  
+
+    $('#btnSaveSettings').fadeIn( "slow" );  
     
     $( "#Shading" ).fadeOut( "fast" ); 
     
@@ -119,7 +153,114 @@ function closeSystemLog(event) {
 
 
 
-// Add Settings
+
+
+// populate Current Settings on Page ready
+function LoadCardComSettingsSettings(event) {
+
+    // jQuery AJAX call for JSON
+    $.getJSON( '/anno/getCardComSettings', function( data ) {
+        
+        // For each item in our JSON, add a table row and cells to the content string
+        $.each(data, function(){
+            
+            $("#inputCustomID").val(this._id);
+            $("#hidedonarid").val(this.hidedonarid);
+            $("#hideCCcvc").val(this.hideCCcvc);
+            $("#Customfield1Label").val(this.Customfield1Label);
+            $("#Customfield1Value").val(this.Customfield1Value);
+            $("#Customfield2Label").val(this.Customfield2Label);
+            $("#Customfield2Value").val(this.Customfield2Value);
+            $("#Customfield3Label").val(this.Customfield3Label);
+            $("#Customfield3Value").val(this.Customfield3Value);
+            $("#Customfield4Label").val(this.Customfield4Label);
+            $("#Customfield4Value").val(this.Customfield4Value);
+            $("#Customfield5Label").val(this.Customfield5Label);
+            $("#Customfield5Value").val(this.Customfield5Value);
+
+        });
+        
+
+    }); 
+    
+
+};
+
+
+
+
+// Save CardCom Settings 
+function SaveCardComSettings(event) {
+
+     var ObjID = $("#inputCustomID").val();
+
+     var hidedonarid = $("#hidedonarid").val();
+     var hideCCcvc = $("#hideCCcvc").val();
+
+     var Customfield1Label = $("#Customfield1Label").val();
+     var Customfield1Value = $("#Customfield1Value").val();
+
+     var Customfield2Label = $("#Customfield2Label").val();
+     var Customfield2Value = $("#Customfield2Value").val();    
+
+     var Customfield3Label = $("#Customfield3Label").val();
+     var Customfield3Value = $("#Customfield3Value").val();
+
+     var Customfield4Label = $("#Customfield4Label").val();
+     var Customfield4Value = $("#Customfield4Value").val();
+
+     var Customfield5Label = $("#Customfield5Label").val();
+     var Customfield5Value = $("#Customfield5Value").val();
+        
+        var SettingsObj = $.parseJSON(hidedonarid);
+        
+        var SettingsObj = {
+            '_id': ObjID,
+            'hidedonarid': hidedonarid,
+            'hideCCcvc': hideCCcvc,
+            'Customfield1Label': Customfield1Label,
+            'Customfield1Value': Customfield1Value,
+            'Customfield2Label': Customfield2Label,
+            'Customfield2Value': Customfield2Value,
+            'Customfield3Label': Customfield3Label,
+            'Customfield3Value': Customfield3Value,
+            'Customfield4Label': Customfield4Label,
+            'Customfield4Value': Customfield4Value,
+            'Customfield5Label': Customfield5Label,
+            'Customfield5Value': Customfield5Value
+        }        
+
+        // Use AJAX to post the object to our adduser service
+        $.ajax({
+            type: 'POST',
+            data: SettingsObj,
+            url: '/anno/SaveCardComSettings',
+            dataType: 'JSON'
+        }).done(function( response ) {
+
+            // Check for successful (blank) response
+            if (response) {
+
+                LoadCardComSettingsSettings();
+                                
+
+            } else {
+
+                // If something goes wrong, alert the error message that our service returned
+                alert('Error: ' + response.msg);
+
+            }
+        });
+
+
+};
+
+
+
+
+
+
+// Save General Settings
 function SaveSettings(event) {
         
         var ObjID = $("#inputID").val();

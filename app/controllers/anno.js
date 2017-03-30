@@ -25,6 +25,7 @@ var colReqDonation;
 var colResLowProfile;
 var colResToken;
 var colSettings;
+var colCustomCCSettings;
 var colUsers;
 var colLog;
 var colSFDC;
@@ -42,6 +43,7 @@ mongo.MongoClient.connect(connString, function(err, database) {
   colUsers = dbm.collection('Users');
   colLog =  dbm.collection('log');
   colSFDC = dbm.collection('SFDC');
+  colCustomCCSettings = dbm.collection('CustomCCSettings');
 });
 
 
@@ -82,9 +84,27 @@ console.log("Gtech NodAPI Anonimouse functions");
     var SFDCLoginUser;
     var SFDCLoginPass_Token;
     var SFDCEnvironmentURL;
-    var Attempts ;
+    var Attempts;
+
+     var hidedonarid;
+     var hideCCcvc;
+
+     var Customfield1Label;
+     var Customfield1Value;
+
+     var Customfield2Label;
+     var Customfield2Value;   
+
+     var Customfield3Label;
+     var Customfield3Value;
+
+     var Customfield4Label;
+     var Customfield4Value;
+
+     var Customfield5Label;
+     var Customfield5Value;   
     
-// Danar Details Variables
+// Donar Details Variables
 
     var InvoiceHead_CustName;
     var InvoiceHead_SendByEmail='true';
@@ -96,6 +116,112 @@ console.log("Gtech NodAPI Anonimouse functions");
     var InvoiceLines_Description;
     
     
+
+/*
+ * POST: save custom CardCom Settings
+ */
+router.post('/SaveCardComSettings/', function(req, res) {
+
+     var doc = req.body;
+     var ObjID = doc._id; 
+
+     hidedonarid = doc.hidedonarid;
+     hideCCcvc = doc.hideCCcvc;
+
+     Customfield1Label = doc.Customfield1Label;
+     Customfield1Value = doc.Customfield1Value;
+
+     Customfield2Label = doc.Customfield2Label;
+     Customfield2Value = doc.Customfield2Value;     
+
+     Customfield3Label = doc.Customfield3Label;
+     Customfield3Value = doc.Customfield3Value;
+
+     Customfield4Label = doc.Customfield4Label;
+     Customfield4Value = doc.Customfield4Value;
+
+     Customfield5Label = doc.Customfield5Label;
+     Customfield5Value = doc.Customfield5Value;
+
+ 
+    var o_id = new mongo.ObjectID(ObjID);
+  
+   colCustomCCSettings.update(
+   { '_id': o_id },
+   { $set: { "hidedonarid":hidedonarid, "hideCCcvc":hideCCcvc, "Customfield1Label":Customfield1Label, "Customfield1Value":Customfield1Value, "Customfield2Label":Customfield2Label, "Customfield2Value":Customfield2Value, "Customfield3Label":Customfield3Label, "Customfield3Value":Customfield3Value, "Customfield4Label":Customfield4Label, "Customfield4Value":Customfield4Value, "Customfield5Label":Customfield5Label, "Customfield5Value" : Customfield5Value } },
+   function(err, results)
+   
+       {
+           
+       res.json(results);
+
+       logger.info('Change CardComSettings Success');
+       
+       
+       });
+
+});
+
+
+
+
+
+/*
+ * GET current settings
+ */
+router.get('/getCardComSettings/', function(req, res) {
+ 
+    var cursor = colCustomCCSettings.find({});
+    var result = [];
+    cursor.each(function(err, doc) {
+        if(err) {
+
+            throw err;
+            logger.error('Get CardCom Settings failure: ' + err);
+
+        }
+
+        if (doc === null) {
+            // doc is null when the last document has been processed
+            res.send(result);
+            
+
+                hidedonarid = result[0].hidedonarid;
+                hideCCcvc = result[0].hideCCcvc;
+
+                Customfield1Label = result[0].Customfield1Label;
+                Customfield1Value = result[0].Customfield1Value;
+
+                Customfield2Label = result[0].Customfield2Label;
+                Customfield2Value = result[0].Customfield2Value;     
+
+                Customfield3Label = result[0].Customfield3Label;
+                Customfield3Value = result[0].Customfield3Value;
+
+                Customfield4Label = result[0].Customfield4Label;
+                Customfield4Value = result[0].Customfield4Value;
+
+                Customfield5Label = result[0].Customfield5Label;
+                Customfield5Value = result[0].Customfield5Value;
+
+
+             logger.info('Load CardCom Settings success');
+    
+            
+            return;
+        }
+        // do something with each doc, like push Email into a results array
+        result.push(doc);
+    });    
+    
+    
+});
+
+
+
+
+
+
 
 
 

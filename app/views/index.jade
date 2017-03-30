@@ -38,7 +38,10 @@ block content
        br
        div#ProcessMsg   
   div#manage
-    fieldset
+    div#General General
+    div#Custom Configuration
+    fieldset#standard
+        div.standardHeader General Configuration 
         input#inputID(type='text', placeholder='id')
         div Terminal:
         input#inputTerminal(type='text', placeholder='Terminal')
@@ -71,4 +74,37 @@ block content
         button#btnSaveSettings Save
         br
         div#status current configuration...
-
+    fieldset#customConfigCardCom
+        div.customConfigCardComHeader Custom Configuration - CardCom 
+        div.inputTitle Hide donar ID on CardCom slika UI (HideCreditCardUserId=true):
+        input#inputCustomID(type='text', placeholder='id')
+        select#hidedonarid
+          option(value="") None
+          option(value="true") True
+          option(value="false") False
+        div.inputTitle Hide CC cvc on CardCom slika UI (HideCVV=true):
+        select#hideCCcvc
+          option(value="") None
+          option(value="true") True
+          option(value="false") False          
+        div.inputTitle [1]Custom field to update CardCom upon request for Low Profile Code:
+        input#Customfield1Label(type='text', placeholder='FieldName')
+        input#Customfield1Value(type='text', placeholder='FieldName')
+        br
+        div.inputTitle [2]Custom field to update CardCom upon request for Low Profile Code:
+        input#Customfield2Label(type='text', placeholder='FieldName')
+        input#Customfield2Value(type='text', placeholder='FieldName')
+        br
+        div.inputTitle [3]Custom field to update CardCom upon request for Low Profile Code:
+        input#Customfield3Label(type='text', placeholder='FieldName')
+        input#Customfield3Value(type='text', placeholder='FieldName')
+        br
+        div.inputTitle [4]Custom field to update CardCom upon request for Low Profile Code:
+        input#Customfield4Label(type='text', placeholder='FieldName')
+        input#Customfield4Value(type='text', placeholder='FieldName')                
+        br
+        div.inputTitle [5]Custom field to update CardCom upon request for Low Profile Code:
+        input#Customfield5Label(type='text', placeholder='FieldName')
+        input#Customfield5Value(type='text', placeholder='FieldName')
+        br
+        button#btnSaveCustomConfiguration Save Custom Configuration                
