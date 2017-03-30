@@ -14,9 +14,9 @@ router.get('/ValidateEmail/:email', function(req, res) {
 
     var email = req.params.email; 
 
-    res.send(email);
+    var results = verifyEmail(email);
 
-    verifyEmail(email);
+    res.send(results);
 
             function verifyEmail(email) {
             var status = "false";     

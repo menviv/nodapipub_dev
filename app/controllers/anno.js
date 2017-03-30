@@ -86,8 +86,8 @@ console.log("Gtech NodAPI Anonimouse functions");
     var SFDCEnvironmentURL;
     var Attempts;
 
-     var hidedonarid;
-     var hideCCcvc;
+     //var hidedonarid;
+    // var hideCCcvc;
 
      var Customfield1Label;
      var Customfield1Value;
@@ -102,7 +102,10 @@ console.log("Gtech NodAPI Anonimouse functions");
      var Customfield4Value;
 
      var Customfield5Label;
-     var Customfield5Value;   
+     var Customfield5Value;  
+
+     var HideCVV;
+     var HideCreditCardUserId; 
     
 // Donar Details Variables
 
@@ -125,8 +128,8 @@ router.post('/SaveCardComSettings/', function(req, res) {
      var doc = req.body;
      var ObjID = doc._id; 
 
-     hidedonarid = doc.hidedonarid;
-     hideCCcvc = doc.hideCCcvc;
+     HideCreditCardUserId = doc.hidedonarid;
+     HideCVV = doc.hideCCcvc;
 
      Customfield1Label = doc.Customfield1Label;
      Customfield1Value = doc.Customfield1Value;
@@ -148,7 +151,7 @@ router.post('/SaveCardComSettings/', function(req, res) {
   
    colCustomCCSettings.update(
    { '_id': o_id },
-   { $set: { "hidedonarid":hidedonarid, "hideCCcvc":hideCCcvc, "Customfield1Label":Customfield1Label, "Customfield1Value":Customfield1Value, "Customfield2Label":Customfield2Label, "Customfield2Value":Customfield2Value, "Customfield3Label":Customfield3Label, "Customfield3Value":Customfield3Value, "Customfield4Label":Customfield4Label, "Customfield4Value":Customfield4Value, "Customfield5Label":Customfield5Label, "Customfield5Value" : Customfield5Value } },
+   { $set: { "hidedonarid":HideCreditCardUserId, "hideCCcvc":HideCVV, "Customfield1Label":Customfield1Label, "Customfield1Value":Customfield1Value, "Customfield2Label":Customfield2Label, "Customfield2Value":Customfield2Value, "Customfield3Label":Customfield3Label, "Customfield3Value":Customfield3Value, "Customfield4Label":Customfield4Label, "Customfield4Value":Customfield4Value, "Customfield5Label":Customfield5Label, "Customfield5Value" : Customfield5Value } },
    function(err, results)
    
        {
@@ -186,8 +189,8 @@ router.get('/getCardComSettings/', function(req, res) {
             res.send(result);
             
 
-                hidedonarid = result[0].hidedonarid;
-                hideCCcvc = result[0].hideCCcvc;
+                HideCreditCardUserId = result[0].hidedonarid;
+                HideCVV = result[0].hideCCcvc;
 
                 Customfield1Label = result[0].Customfield1Label;
                 Customfield1Value = result[0].Customfield1Value;
@@ -487,6 +490,12 @@ router.post('/QueryAnnoSFDC/', function(req, res) {
     
     var numPayments = queryBody.numPayments;
     var AnnoEmp = queryBody.AnnoEmp;
+
+    HideCreditCardUserId = queryBody.HideCreditCardUserId;
+
+    HideCVV = queryBody.HideCVV;
+
+
     var donarid = queryBody.donarid; 
     
     var BillDay = moment().date();

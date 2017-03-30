@@ -49,8 +49,6 @@ $(document).ready(function() {
     Login();
     
     LoadCurrentSettings(); 
-
-    LoadCardComSettingsSettings(); 
     
     // Save Settings on button click
     $('#btnSaveSettings').on('click', SaveSettings); 
@@ -87,19 +85,29 @@ $(document).ready(function() {
 
 function openCustomConfigCardCom() {
 
+    LoadCardComSettingsSettings();
+
     $( "fieldset#customConfigCardCom" ).fadeIn( "slow" ); 
 
     $('fieldset#standard').fadeOut( "slow" ); 
 
-    console.log("openCustomConfigCardCom");
+    $( "div#General" ).removeClass( "selected" ); 
+
+    $( "div#Custom" ).addClass( "selected" ); 
 
 }
 
 function openGeneralConfig() {
 
+    LoadCurrentSettings(); 
+
     $('fieldset#standard').fadeIn( "slow" ); 
 
     $( "fieldset#customConfigCardCom" ).fadeOut( "slow" ); 
+
+    $( "div#General" ).addClass( "selected" ); 
+
+    $( "div#Custom" ).removeClass( "selected" );     
 
 }
 
@@ -157,6 +165,10 @@ function closeSystemLog(event) {
 
 // populate Current Settings on Page ready
 function LoadCardComSettingsSettings(event) {
+
+    $( "div#General" ).removeClass( "selected" ); 
+
+    $( "div#Custom" ).addClass( "selected" ); 
 
     // jQuery AJAX call for JSON
     $.getJSON( '/anno/getCardComSettings', function( data ) {
@@ -331,6 +343,10 @@ function SaveSettings(event) {
 
 // populate Current Settings on Page ready
 function LoadCurrentSettings(event) {
+
+    $( "div#General" ).addClass( "selected" ); 
+
+    $( "div#Custom" ).removeClass( "selected" );   
 
     // jQuery AJAX call for JSON
     $.getJSON( '/anno/getSettings', function( data ) {

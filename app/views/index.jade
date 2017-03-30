@@ -38,8 +38,9 @@ block content
        br
        div#ProcessMsg   
   div#manage
-    div#General General
-    div#Custom Configuration
+    div#TabCon
+        div#General General
+        div#Custom Advanced
     fieldset#standard
         div.standardHeader General Configuration 
         input#inputID(type='text', placeholder='id')
@@ -48,27 +49,27 @@ block content
         div UserName:
         input#inputUserName(type='text', placeholder='UserName')
         br
-        div Operation:
+        div.inputTitle Operation:
         input#inputOperation(type='text', placeholder='Operation')
-        div DocTypeToCreate:
+        div.inputTitle  DocTypeToCreate:
         input#inputDocTypeToCreate(type='text', placeholder='DocTypeToCreate')
-        div ShowCardOwnerPhone:
+        div.inputTitle  ShowCardOwnerPhone:
         input#inputShowCardOwnerPhone(type='text', placeholder='ShowCardOwnerPhone')
-        div ShowCardOwnerEmail:
+        div.inputTitle  ShowCardOwnerEmail:
         input#inputShowCardOwnerEmail(type='text', placeholder='ShowCardOwnerEmail')
-        div Billing Attempts:
+        div.inputTitle  Billing Attempts:
         input#inputAttempts(type='text', placeholder='Number of retries')        
         br
-        div Request LowProFileCod URL:
+        div.inputTitle  Request LowProFileCod URL:
         input#inputLowProFileURL(type='text', placeholder='LowProFileURL')
-        div Request Asimon URL:
+        div.inputTitle  Request Asimon URL:
         input#inputAsimonURL(type='text', placeholder='AsimonURL')
         br
-        div SFDC Login User:
+        div.inputTitle  SFDC Login User:
         input#inputSFDCLoginUser(type='text', placeholder='SFDCLoginUser')
-        div SFDC Login Pass&Token:
+        div.inputTitle  SFDC Login Pass&Token:
         input#inputSFDCLoginPass_Token(type='text', placeholder='SFDCLoginPass_Token')
-        div SFDC Environment URL:
+        div.inputTitle  SFDC Environment URL:
         input#inputSFDCEnvironmentURL(type='text', placeholder='SFDCEnvironmentURL')
         br
         button#btnSaveSettings Save
@@ -76,8 +77,8 @@ block content
         div#status current configuration...
     fieldset#customConfigCardCom
         div.customConfigCardComHeader Custom Configuration - CardCom 
-        div.inputTitle Hide donar ID on CardCom slika UI (HideCreditCardUserId=true):
         input#inputCustomID(type='text', placeholder='id')
+        div.inputTitle Hide donar ID on CardCom slika UI (HideCreditCardUserId=true):
         select#hidedonarid
           option(value="") None
           option(value="true") True
