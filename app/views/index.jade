@@ -22,7 +22,20 @@ block content
     table#LogList    
   div#Reoccuring
     div#closeReoccuringList X 
-    div#ReoccuringListHeader Upcoming Donations 
+    div#ReoccuringListHeader Upcoming Donations
+    div#selectHeaderTR Reoccuring billing Group:
+       select#BillDateGroup
+         option(value="1") 01
+         option(value="5") 05
+         option(value="7") 07
+         option(value="10") 10
+         option(value="12") 12
+         option(value="15") 15
+         option(value="20") 20
+         option(value="25") 25 
+         option(value="27") 27
+       button#btnQueryNext Query Next   
+       button#btnManualBill Manual Bill 
     table#ReoccuringList
   div#Shading
   div#ReoccuringBuilder

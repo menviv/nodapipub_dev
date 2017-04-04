@@ -16,6 +16,16 @@ module.exports = function(app, config) {
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'jade');
 
+  var RateLimit = require('express-rate-limit');
+ 
+  var limiter = new RateLimit({
+  windowMs: 15*60*1000, // 15 minutes 
+  max: 20, // limit each IP to 100 requests per windowMs 
+  delayMs: 500 // disable delaying - full speed until the max limit is reached 
+  });  
+  
+  app.use(limiter);  
+
   // app.use(favicon(config.root + '/public/img/favicon.ico'));
   app.use(logger('dev'));
   app.use(bodyParser.json());

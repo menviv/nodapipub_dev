@@ -2,6 +2,8 @@
 
 var ListData = [];
 
+var Attempts;
+
 var BillDay = moment().date();
 
 var BillDateGroup;
@@ -62,8 +64,10 @@ $(document).ready(function() {
     
     $('#closeReoccuringBuilder').on('click', closeReoccuringBuilder);  
     
-    $('#openReoccuringList').on('click', getReoccuringList);  
-   
+    $('#openReoccuringList').on('click', getReoccuringList); 
+    
+    $('#btnQueryNext').on('click', getNextReoccuringList); 
+
     $('#closeReoccuringList').on('click', closeReoccuringList); 
 
     $('#openLog').on('click', getSystemLog);  
@@ -79,6 +83,14 @@ $(document).ready(function() {
     
 
 });
+
+
+///////// Time Module ///////////////////////
+var DateFormat = "DD-MM-YYYY HH:mm:ss";
+
+
+
+
 
 // Functions =============================================================
 
@@ -171,7 +183,7 @@ function LoadCardComSettingsSettings(event) {
     $( "div#Custom" ).addClass( "selected" ); 
 
     // jQuery AJAX call for JSON
-    $.getJSON( '/anno/getCardComSettings', function( data ) {
+    $.getJSON( '/config/getCardComSettings', function( data ) {
         
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data, function(){
@@ -246,7 +258,7 @@ function SaveCardComSettings(event) {
         $.ajax({
             type: 'POST',
             data: SettingsObj,
-            url: '/anno/SaveCardComSettings',
+            url: '/config/SaveCardComSettings',
             dataType: 'JSON'
         }).done(function( response ) {
 
@@ -315,7 +327,7 @@ function SaveSettings(event) {
         $.ajax({
             type: 'POST',
             data: SettingsObj,
-            url: '/anno/changeSettings',
+            url: '/config/changeSettings',
             dataType: 'JSON'
         }).done(function( response ) {
 
@@ -349,7 +361,7 @@ function LoadCurrentSettings(event) {
     $( "div#Custom" ).removeClass( "selected" );   
 
     // jQuery AJAX call for JSON
-    $.getJSON( '/anno/getSettings', function( data ) {
+    $.getJSON( '/config/getSettings', function( data ) {
         
         console.log("populateCurrentSettings: ", data);
 
@@ -369,6 +381,8 @@ function LoadCurrentSettings(event) {
             $("#inputSFDCLoginPass_Token").val(this.SFDCLoginPass_Token);
             $("#inputSFDCEnvironmentURL").val(this.SFDCEnvironmentURL);
             $("#inputAttempts").val(this.Attempts);
+            
+            Attempts = parseInt(this.Attempts);
 
         });
         
@@ -433,11 +447,22 @@ function Login(event) {
 };
 
 
+
+
+$("#BillDateGroup").change(function() {
+    
+    getReoccuringList();
+    
+});
+
+
     
     
     
 // Fill SFDC table with data
 function getReoccuringList() {
+    
+    var BillDateGroup = $("#BillDateGroup").val();
   
     // Empty content string
     var tableContent = '';
@@ -447,7 +472,16 @@ function getReoccuringList() {
     // jQuery AJAX call for JSON
     $.getJSON( url, function( data ) {
         
-        console.log(data.records);
+            tableContent += '<tr>';
+            tableContent += '<th>SFDC URL</th>';
+            tableContent += '<th>Created Date</th>';
+            tableContent += '<th>Contact IdL</th>';
+            tableContent += '<th>Amount</th>';
+            tableContent += '<th>Bill Date Group</th>';
+            tableContent += '<th>Attempts</th>';
+            tableContent += '<th>Donar ID</th>';
+            tableContent += '<th>Status</th>';
+            tableContent += '</tr>';
 
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data.records, function(){
@@ -458,6 +492,8 @@ function getReoccuringList() {
         
             tableContent += '<tr>';
             tableContent += '<td><a href=https://eu6.salesforce.com/' + this.Id + ' target=_blank> Open </a></td>';
+            tableContent += '<td>' + moment(this.CreatedDate).format(DateFormat) + '</td>'; 
+            tableContent += '<td>' + this.Contact__c + '</td>';
             tableContent += '<td>' + this.Amount__c + '</td>';
             tableContent += '<td>' + this.BillDateGroup__c + '</td>';
             tableContent += '<td>' + this.attempts__c + '</td>';
@@ -487,6 +523,76 @@ function getReoccuringList() {
 };
 
 
+    
+// Fill SFDC table with data
+function getNextReoccuringList() {
+    
+    var BillDateGroup = $("#BillDateGroup").val();
+  
+    // Empty content string
+    var tableContent = '';
+    var url = '/anno/getNextReoccuringList/' + BillDateGroup;
+
+    
+    // jQuery AJAX call for JSON
+    $.getJSON( url, function( data ) {
+        
+            tableContent += '<tr>';
+            tableContent += '<th>SFDC URL</th>';
+            tableContent += '<th>Created Date</th>';
+            tableContent += '<th>Contact IdL</th>';
+            tableContent += '<th>Amount</th>';
+            tableContent += '<th>Bill Date Group</th>';
+            tableContent += '<th>Attempts</th>';
+            tableContent += '<th>Donar ID</th>';
+            tableContent += '<th>Status</th>';
+            tableContent += '</tr>';
+
+        // For each item in our JSON, add a table row and cells to the content string
+        $.each(data.records, function(){
+        
+            // Stick our user data array into a userlist variable in the global object
+    		ListData = data.records;
+            
+        
+            tableContent += '<tr>';
+            tableContent += '<td><a href=https://eu6.salesforce.com/' + this.Id + ' target=_blank> Open </a></td>';
+            tableContent += '<td>' + moment(this.CreatedDate).format(DateFormat) + '</td>'; 
+            tableContent += '<td>' + this.Contact__c + '</td>';
+            tableContent += '<td>' + this.Amount__c + '</td>';
+            tableContent += '<td>' + this.BillDateGroup__c + '</td>';
+            tableContent += '<td>' + this.attempts__c + '</td>';
+            tableContent += '<td>' + this.donarid__c + '</td>';
+            tableContent += '<td>' + this.Status__c + '</td>';
+            tableContent += '</tr>';  
+            tableContent += '<tr>';
+            tableContent += '<td colspan=8>' + this.Token__c + '</td>';
+            tableContent += '</tr>';              
+
+        });
+       
+        $('#ReoccuringList').html(tableContent);
+        
+        $( "#Shading" ).fadeIn( "fast" ); 
+        
+        $( "#manage" ).fadeOut( "slow" );  
+
+        $( "#Log" ).fadeOut( "slow" );  
+        
+        $( "#Reoccuring" ).fadeIn( "slow" );  
+        
+
+        
+        
+
+    }); 
+    
+
+};
+
+
+
+
 
 
 // Fill table with Log data
@@ -494,7 +600,7 @@ function getSystemLog() {
   
     // Empty content string
     var tableContent = '';
-    var url = '/anno/GetLogList/';
+    var url = '/log/GetLogList';
 
     
     // jQuery AJAX call for JSON
